@@ -50,7 +50,7 @@ std::pair<float, float> approx_lineal(std::vector<float> xs, std::vector<float> 
     sum_2 *= 2;
 
     if (sum_1 == 0 && sum_2 == 0) {
-        return {sum_1, sum_2}; // a b
+        return {a, b};
     } else {
         throw LinearApproximationException();
     }
