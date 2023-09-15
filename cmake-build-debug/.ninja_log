@@ -1,0 +1,5 @@
+# ninja log v5
+2	277	7165030109690621	CMakeFiles/function_approximation.dir/approximation.cpp.obj	4a1e2cbcf4ff46c3
+287	360	7165030110480622	function_approximation.exe	a83695333629e54c
+2	405	7165013280732038	CMakeFiles/function_approximation.dir/main.cpp.obj	33eceaa06f43e53d
+1	100	7165031941170504	build.ninja	c8e5a4e612cf0678

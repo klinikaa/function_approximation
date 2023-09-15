@@ -1,6 +1,4 @@
-#include <vector>
-#include <numeric>
-#include <valarray>
+#include "approximation.h"
 
 class LinearApproximationException : public std::exception {
     public:
@@ -9,14 +7,9 @@ class LinearApproximationException : public std::exception {
         }
     };
 
-struct result {
-    std::vector<float> x;
-    std::vector<float> y;
-};
-
 std::pair<float, float> approx_lineal(std::vector<float> xs, std::vector<float> ys) {
     auto squareSum {
-            [](int acc, int num)-> float {
+            [](float acc, float num)-> float {
                 return acc + (num * num);
             }
     };
@@ -35,7 +28,7 @@ std::pair<float, float> approx_lineal(std::vector<float> xs, std::vector<float> 
     float a = delta_1 / delta_0;
     float b = delta_2 / delta_0;
 
-    // let's check the necessary condition the existence of a minimum for the function S
+    /* checking the necessary condition the existence of a minimum for the function S */
     float sum_1 = 0;
     for (size_t i = 0; i < n; i++) {
         sum_1 += (a * xs[i] + b - ys[i]) * xs[i];
@@ -49,7 +42,31 @@ std::pair<float, float> approx_lineal(std::vector<float> xs, std::vector<float> 
     sum_1 *= 2;
     sum_2 *= 2;
 
-    if (sum_1 == 0 && sum_2 == 0) {
+    /*
+     * A function is unbounded: If a function has no lower bound and continues to decrease indefinitely,
+     * then it will have no minimum.
+     *
+     * A function is not differentiable: If a function is not differentiable in a given domain,
+     * then it may not have extremum points, including a minimum.
+     *
+     * A function has discontinuities: If a function has discontinuities or breaking points in a given region,
+     * then it may not have a minimum.
+     */
+
+    /*
+     * Due to errors arising from the representation of floating point numbers in a computer,
+     * we will compare not with 0, but with epsilon.
+     *
+     * Here, epsilon is the acceptable tolerance or margin of error when comparing floating point numbers.
+     * Instead of using exact equality (==) to compare sum_1 and sum_2 with 0, we use a comparison with epsilon.
+     *
+     * By comparing the absolute values of sum_1 and sum_2 with epsilon,
+     * we can determine if they are close enough to zero.
+     */
+
+    float epsilon = 1e-3;
+
+    if (std::abs(sum_1) < epsilon && std::abs(sum_2) < epsilon) {
         return {a, b};
     } else {
         throw LinearApproximationException();
