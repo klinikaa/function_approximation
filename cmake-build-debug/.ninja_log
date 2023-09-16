@@ -1,13 +1,9 @@
 # ninja log v5
-2	277	7165030109690621	CMakeFiles/function_approximation.dir/approximation.cpp.obj	4a1e2cbcf4ff46c3
-287	360	7165030110480622	function_approximation.exe	a83695333629e54c
-2	405	7165013280732038	CMakeFiles/function_approximation.dir/main.cpp.obj	33eceaa06f43e53d
-1	100	7165755985177213	build.ninja	c8e5a4e612cf0678
-87	1853	7165786022799950	CMakeFiles/function_approximation.dir/approximation.cpp.obj	e39ae15ba378be1e
-2	1864	7165786022919474	CMakeFiles/function_approximation.dir/main.cpp.obj	f7223e17ef26694
-1865	2124	7165786025482334	function_approximation.exe	e098482338b06418
-8	320	7165790227256759	CMakeFiles/function_approximation.dir/approximation.cpp.obj	e39ae15ba378be1e
-3	510	7165790229154718	CMakeFiles/function_approximation.dir/main.cpp.obj	f7223e17ef26694
-510	644	7165790230448626	function_approximation.exe	e098482338b06418
-1	1857	7165797833136370	CMakeFiles/function_approximation.dir/main.cpp.obj	f7223e17ef26694
+6	336	7165933442153139	CMakeFiles/function_approximation.dir/approximation.cpp.obj	7bae5691f922dadb
 1857	2088	7165797835425974	function_approximation.exe	e098482338b06418
+2	842	7165933447224633	CMakeFiles/function_approximation.dir/main.cpp.obj	f9c98759d2b9c1a5
+1	100	7165934861317545	build.ninja	c8e5a4e612cf0678
+9	806	7165933446851794	CMakeFiles/function_approximation.dir/graph.cpp.obj	1664e46400a36dfe
+2	392	7165937182826962	CMakeFiles/function_approximation.dir/approximation.cpp.obj	55a6df259724ef75
+10	831	7165937187225941	CMakeFiles/function_approximation.dir/graph.cpp.obj	54302fc2671f74be
+6	894	7165937187867215	CMakeFiles/function_approximation.dir/main.cpp.obj	5e07d03865f3510a

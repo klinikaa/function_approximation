@@ -2,7 +2,9 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+
 #include "approximation.h"
+#include "graph.h"
 
 typedef std::pair<std::vector<float>, std::vector<float>> Points;
 
@@ -63,6 +65,10 @@ int main() {
     size_t n = points.first.size();
     float linealStandardDeviation = standard_deviation(linealDeviation, n);
     std::cout << "Standard deviation for lineal approximation (δ)= " << linealStandardDeviation << std::endl;
+
+    Graph graph;
+    graph.setLinearFunction(points.first, points.second);
+    graph.plot();
 
     return 0;
 }
