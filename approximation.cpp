@@ -7,12 +7,44 @@ class LinearApproximationException : public std::exception {
         }
     };
 
+float standard_deviation(float S, size_t n) { /* S =  ∑[1, n](a*x_i + b - y_i)^2 */
+    return std::sqrt(S / n);
+}
+
+float deviation_lineal(float a, float b, std::vector<float> &xs, std::vector<float> &ys) {
+    /* φ(x) = ax + b
+     * this is approximating function
+     *
+     * we substitute the values from the vector xs into it,
+     * and then compare the resulting y using the least squares method
+     *
+     * least squares function: S = S(a, b) = ∑[1, n](ε_i^2) =
+     * ∑[1, n](φ(x_i) - y_i)^2 = ∑[1, n](a*x_i + b - y_i)^2 -> min
+     * */
+
+    auto phi_of_x = [a, b](float x) -> float {
+        return a * x + b;
+    };
+
+    float S = 0;
+    std::vector<float> y_phi; y_phi.reserve(xs.size());
+
+    for (float x : xs) {
+        y_phi.push_back(phi_of_x(x));
+    }
+
+    for (size_t i = 0; i < y_phi.size(); i++) {
+        S += std::pow(y_phi[i] - ys[i], 2);
+    }
+
+    return S;
+}
+
 std::pair<float, float> approx_lineal(std::vector<float> xs, std::vector<float> ys) {
-    auto squareSum {
+    auto squareSum =
             [](float acc, float num)-> float {
                 return acc + (num * num);
-            }
-    };
+            };
 
     float sx = std::accumulate(xs.begin(), xs.end(), 0.0f);
     float sxx = std::accumulate(xs.begin(), xs.end(), 0.0f, squareSum);

@@ -31,7 +31,7 @@ Points readFunctionPointsFromFile(std::string &fileName) {
         xs.push_back(x);
     }
 
-    std::getline(file, line); // Считываем вторую строку с массивом ys
+    std::getline(file, line);
     std::istringstream ysStream(line);
     std::vector<float> ys;
 
@@ -55,7 +55,14 @@ int main() {
     float a = ab.first;
     float b = ab.second;
 
-    std::cout << "We got a = " + std::to_string(a) + " and b = " + std::to_string(b) << std::endl;
+    std::cout << "We got a = " << a << " and b = " << b << std::endl;
+
+    float linealDeviation = deviation_lineal(a, b, points.first, points.second);
+    std::cout << "Deviation measure for linear approximation = " << linealDeviation << std::endl;
+
+    size_t n = points.first.size();
+    float linealStandardDeviation = standard_deviation(linealDeviation, n);
+    std::cout << "Standard deviation for lineal approximation (δ)= " << linealStandardDeviation << std::endl;
 
     return 0;
 }
