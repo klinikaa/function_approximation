@@ -7,6 +7,56 @@ class LinearApproximationException : public std::exception {
         }
     };
 
+float average(std::vector<float> &v) {
+    if (v.empty()) {
+        return 0;
+    }
+
+    auto const size = static_cast<float>(v.size());
+    return std::accumulate(v.begin(), v.end(), 0.0f) / size;
+}
+
+/* also known as Pearson coefficient
+ * used in this program only for linear approximation
+ * formula: r = (Σ((x_i - x_avg) * (y_i - y_avg))) / (sqrt(Σ(x_i - x_avg)^2) * sqrt(Σ(y_i - y_avg)^2))
+ *
+ * The correlation coefficient is used to answer the question:
+ * is there a linear relationship between the variables and how strong is it?
+ *
+ * r = +- 1 => strong relationship
+ * r = 0 => no relationship
+ * etc.
+ */
+float correlation_coefficient(std::vector<float> xs, std::vector<float> ys) {
+    float xAverage = average(xs);
+    float yAverage = average(ys);
+
+    float numerator = 0;
+    for (size_t i = 0; i < xs.size(); i++) {
+        numerator += (xs[i] - xAverage) * (ys[i] - yAverage);
+    }
+
+    float denominator;
+
+    float leftSum = 0;
+    for (size_t j = 0; j < xs.size(); j++) {
+        leftSum += std::pow(xs[j] - xAverage, 2);
+    }
+
+    float rightSum = 0;
+    for (size_t k = 0; k < ys.size(); k++) {
+        rightSum += std::pow(ys[k] - yAverage, 2);
+    }
+
+    denominator = std::sqrt(leftSum * rightSum);
+
+    if (denominator == 0) {
+        throw std::runtime_error("While processing Pearson's coefficient dominator become 0!");
+    } else {
+        return numerator / denominator;
+    }
+}
+
 float standard_deviation(float S, size_t n) { /* S =  ∑[1, n](a*x_i + b - y_i)^2 */
     return std::sqrt(S / n);
 }

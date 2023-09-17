@@ -64,5 +64,7 @@ int main() {
     float linealStandardDeviation = standard_deviation(linealDeviation, n);
     std::cout << "Standard deviation for lineal approximation (δ)= " << linealStandardDeviation << std::endl;
 
+    float pearsonCoefficient = correlation_coefficient(points.first, points.second);
+    std::cout << "Pearson coefficient for linear approximation (r) = " << pearsonCoefficient << std::endl;
     return 0;
 }

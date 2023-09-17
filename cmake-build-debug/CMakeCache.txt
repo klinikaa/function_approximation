@@ -239,6 +239,9 @@ CMAKE_STRIP:FILEPATH=C:/mingw32/bin/strip.exe
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//No help, variable specified on the command line.
+PYTHON_INCLUDE_DIR:UNINITIALIZED=C:\Users\chesn\AppData\Local\Programs\Python\Python311\include
+
 //Value Computed by CMake
 function_approximation_BINARY_DIR:STATIC=C:/cloned-projects/function_approximation/cmake-build-debug
 
