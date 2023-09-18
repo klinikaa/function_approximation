@@ -179,7 +179,6 @@ std::pair<float, float> approx_exponential(std::vector<float> &xs, std::vector<f
     double sum_xs_ln_ys = 0.0;
     double sum_xs_squared = 0.0;
 
-    // Вычисление сумм
     for (size_t i = 0; i < xs.size(); i++) {
         sum_xs += xs[i];
         sum_ln_ys += ln_ys[i];
@@ -189,7 +188,6 @@ std::pair<float, float> approx_exponential(std::vector<float> &xs, std::vector<f
 
     double n = xs.size();
 
-    // Вычисление коэффициентов
     double B = (n * sum_xs_ln_ys - sum_xs * sum_ln_ys) / (n * sum_xs_squared - sum_xs * sum_xs);
     double A = std::exp((sum_ln_ys - B * sum_xs) / n);
 
