@@ -14,4 +14,6 @@ float standard_deviation(float S, size_t n);
 
 float correlation_coefficient(std::vector<float> xs, std::vector<float> ys);
 
+std::pair<float, float> approx_exponential(std::vector<float> &xs, std::vector<float> &ys);
+
 #endif //FUNCTION_APPROXIMATION_APPROXIMATION_H

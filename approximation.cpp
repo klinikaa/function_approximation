@@ -154,3 +154,27 @@ std::pair<float, float> approx_lineal(std::vector<float> xs, std::vector<float> 
         throw LinearApproximationException();
     }
 }
+
+/* φ(x) = a * exp(b * x)
+ * to apply the least squares method, the function is linearized
+ * this is necessary because the least squares method assumes
+ * that the relationship between variables can be described by a linear model
+ *
+ * we make a change of variables: A = ln(a), B = b
+ * then we look for these coefficients by solving the system of equations
+ * (you can reuse the linear approximation function, since we have a linear dependence)
+ * at the end we do the reverse change of variables => a = exp(A)
+ */
+std::pair<float, float> approx_exponential(std::vector<float> &xs, std::vector<float> &ys) {
+    std::vector<float> ln_ys;
+    ln_ys.reserve(ys.size());
+
+    /* data linearization */
+    for (const auto& y : ys) {
+        ln_ys.push_back(std::log(y));
+    }
+
+    std::pair<float, float> result = approx_lineal(xs, ln_ys);
+    result.first = std::exp(result.first);
+    return result;
+}

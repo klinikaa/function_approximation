@@ -44,6 +44,8 @@ Points readFunctionPointsFromFile(std::string &fileName) {
 }
 
 int main() {
+    labInfo();
+
     std::string fileName = "test.txt";
     Points points = readFunctionPointsFromFile(fileName);
 
@@ -66,5 +68,20 @@ int main() {
 
     float pearsonCoefficient = correlation_coefficient(points.first, points.second);
     std::cout << "Pearson coefficient for linear approximation (r) = " << pearsonCoefficient << std::endl;
+
+    std::cout << "======================================================================================" << std::endl;
+
+    std::pair<float, float> e_ab = approx_exponential(points.first, points.second);
+    float e_a = e_ab.first;
+    float e_b = e_ab.second;
+
+    std::cout << "We got a = " << e_a << " and b = " << e_b << std::endl;
+
+    float exponentialDeviation = deviation_lineal(e_a, e_b, points.first, points.second);
+    std::cout << "Deviation measure for exponential approximation = " << exponentialDeviation << std::endl;
+
+    size_t e_n = points.first.size();
+    float exponentialStandardDeviation = standard_deviation(exponentialDeviation, e_n);
+    std::cout << "Standard deviation for exponential approximation (δ)= " << exponentialStandardDeviation << std::endl;
     return 0;
 }
