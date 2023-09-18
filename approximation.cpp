@@ -166,7 +166,7 @@ std::pair<float, float> approx_lineal(std::vector<float> xs, std::vector<float> 
  * at the end we do the reverse change of variables => a = exp(A)
  */
 std::pair<float, float> approx_exponential(std::vector<float> &xs, std::vector<float> &ys) {
-    std::vector<float> ln_ys;
+    std::vector<double> ln_ys;
     ln_ys.reserve(ys.size());
 
     /* data linearization */
@@ -174,7 +174,24 @@ std::pair<float, float> approx_exponential(std::vector<float> &xs, std::vector<f
         ln_ys.push_back(std::log(y));
     }
 
-    std::pair<float, float> result = approx_lineal(xs, ln_ys);
-    result.first = std::exp(result.first);
-    return result;
+    double sum_xs = 0.0;
+    double sum_ln_ys = 0.0;
+    double sum_xs_ln_ys = 0.0;
+    double sum_xs_squared = 0.0;
+
+    // Вычисление сумм
+    for (size_t i = 0; i < xs.size(); i++) {
+        sum_xs += xs[i];
+        sum_ln_ys += ln_ys[i];
+        sum_xs_ln_ys += xs[i] * ln_ys[i];
+        sum_xs_squared += xs[i] * xs[i];
+    }
+
+    double n = xs.size();
+
+    // Вычисление коэффициентов
+    double B = (n * sum_xs_ln_ys - sum_xs * sum_ln_ys) / (n * sum_xs_squared - sum_xs * sum_xs);
+    double A = std::exp((sum_ln_ys - B * sum_xs) / n);
+
+    return std::make_pair(A, B);
 }

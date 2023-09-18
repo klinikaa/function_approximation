@@ -77,11 +77,11 @@ int main() {
 
     std::cout << "We got a = " << e_a << " and b = " << e_b << std::endl;
 
-    float exponentialDeviation = deviation_lineal(e_a, e_b, points.first, points.second);
-    std::cout << "Deviation measure for exponential approximation = " << exponentialDeviation << std::endl;
-
-    size_t e_n = points.first.size();
-    float exponentialStandardDeviation = standard_deviation(exponentialDeviation, e_n);
-    std::cout << "Standard deviation for exponential approximation (δ)= " << exponentialStandardDeviation << std::endl;
+//    float exponentialDeviation = deviation_lineal(e_a, e_b, points.first, points.second);
+//    std::cout << "Deviation measure for exponential approximation = " << exponentialDeviation << std::endl;
+//
+//    size_t e_n = points.first.size();
+//    float exponentialStandardDeviation = standard_deviation(exponentialDeviation, e_n);
+//    std::cout << "Standard deviation for exponential approximation (δ)= " << exponentialStandardDeviation << std::endl;
     return 0;
 }
