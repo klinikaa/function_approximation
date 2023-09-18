@@ -154,3 +154,39 @@ std::pair<float, float> approx_lineal(std::vector<float> xs, std::vector<float> 
         throw LinearApproximationException();
     }
 }
+
+/*
+ *
+ *
+ * return value contains 3 float coefficients
+ */
+
+//TODO: checking the necessary condition the existence of a minimum for the function S
+std::vector<float> quadratic_approximation(std::vector<float> xs, std::vector<float> ys) {
+    auto squareSum =
+            [](float acc, float num) -> float {
+                return acc + (num * num);
+            };
+
+    auto cubeSum = [](float acc, float num) -> float {
+        return acc + (num * num * num);
+    };
+
+    auto fourSum = [](float acc, float num) -> float {
+        return acc + (num * num * num * num);
+    };
+
+    float sx = std::accumulate(xs.begin(), xs.end(), 0.0f);
+    float sxx = std::accumulate(xs.begin(), xs.end(), 0.0f, squareSum);
+    float sxxx = std::accumulate(xs.begin(), xs.end(), 0.0f, cubeSum);
+    float sxxxx = std::accumulate(xs.begin(), xs.end(), 0.0f, fourSum);
+
+    float sy = std::accumulate(ys.begin(), ys.end(), 0.0f);
+    float sxy = std::inner_product(xs.begin(), xs.end(), ys.begin(), 0.0f);
+    float sxxy = 0.0f;
+    for (size_t i = 0; i < xs.size(); i++) {
+        sxxy += xs[i] * xs[i] * ys[i];
+    }
+
+
+}

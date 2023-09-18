@@ -66,5 +66,6 @@ int main() {
 
     float pearsonCoefficient = correlation_coefficient(points.first, points.second);
     std::cout << "Pearson coefficient for linear approximation (r) = " << pearsonCoefficient << std::endl;
+    //TODO what type of r is this?
     return 0;
 }
