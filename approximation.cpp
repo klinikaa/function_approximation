@@ -90,6 +90,34 @@ float deviation_lineal(float a, float b, std::vector<float> &xs, std::vector<flo
     return S;
 }
 
+float deviation_exponential(float a, float b, std::vector<float> &xs, std::vector<float> &ys) {
+    /* φ(x) = a * exp(b * x)
+     * this is approximating function
+     *
+     * we substitute the values from the vector xs into it,
+     * and then compare the resulting y using the least squares method
+     *
+     * least squares function: S = S(a, b) = ∑[1, n](ε_i^2) =
+     * ∑[1, n](φ(x_i) - y_i)^2 = ∑[1, n](a*x_i + b - y_i)^2 -> min
+     * */
+    auto phi_of_x = [a, b](float x) -> float {
+        return a * std::exp(b * x);
+    };
+
+    float S = 0;
+    std::vector<float> y_phi; y_phi.reserve(xs.size());
+
+    for (float x : xs) {
+        y_phi.push_back(phi_of_x(x));
+    }
+
+    for (size_t i = 0; i < y_phi.size(); i++) {
+        S += std::pow(y_phi[i] - ys[i], 2);
+    }
+
+    return S;
+}
+
 std::pair<float, float> approx_lineal(std::vector<float> xs, std::vector<float> ys) {
     auto squareSum =
             [](float acc, float num)-> float {
@@ -191,5 +219,5 @@ std::pair<float, float> approx_exponential(std::vector<float> &xs, std::vector<f
     double B = (n * sum_xs_ln_ys - sum_xs * sum_ln_ys) / (n * sum_xs_squared - sum_xs * sum_xs);
     double A = std::exp((sum_ln_ys - B * sum_xs) / n);
 
-    return std::make_pair(A, B);
+    return {A, B};
 }
