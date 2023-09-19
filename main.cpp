@@ -105,5 +105,20 @@ int main() {
     float powerExponentialDeviation = standard_deviation(powerDeviation, p_n);
     std::cout << "Standard deviation for power approximation (δ)= " << powerExponentialDeviation << std::endl;
 
+    std::cout << "======================================================================================" << std::endl;
+    std::cout << "LOG APPROXIMATION" << std::endl;
+
+    std::pair<float, float> l_ab = approx_log(points.first, points.second);
+    float l_a = l_ab.first;
+    float l_b = l_ab.second;
+
+    std::cout << "We got a = " << l_a << " and b = " << l_b << std::endl;
+    float logDeviation = deviation_log(l_a, l_b, points.first, points.second);
+    std::cout << "Deviation measure for log approximation = " << logDeviation << std::endl;
+
+    size_t l_n = points.first.size();
+    float logExponentialDeviation = standard_deviation(logDeviation, l_n);
+    std::cout << "Standard deviation for log approximation (δ)= " << logExponentialDeviation << std::endl;
+
     return 0;
 }
