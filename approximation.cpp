@@ -118,6 +118,26 @@ float deviation_exponential(float a, float b, std::vector<float> &xs, std::vecto
     return S;
 }
 
+//TODO: add comments
+float deviation_power(float a, float b, std::vector<float> &xs, std::vector<float> &ys) {
+    auto phi_of_x = [a, b](float x) -> float {
+        return a * std::pow(x, b);
+    };
+
+    float S = 0;
+    std::vector<float> y_phi; y_phi.reserve(xs.size());
+
+    for (float x : xs) {
+        y_phi.push_back(phi_of_x(x));
+    }
+
+    for (size_t i = 0; i < y_phi.size(); i++) {
+        S += std::pow(y_phi[i] - ys[i], 2);
+    }
+
+    return S;
+}
+
 std::pair<float, float> approx_lineal(std::vector<float> xs, std::vector<float> ys) {
     auto squareSum =
             [](float acc, float num)-> float {
@@ -194,7 +214,7 @@ std::pair<float, float> approx_lineal(std::vector<float> xs, std::vector<float> 
  * at the end we do the reverse change of variables => a = exp(A)
  */
 std::pair<float, float> approx_exponential(std::vector<float> &xs, std::vector<float> &ys) {
-    std::vector<double> ln_ys;
+    std::vector<float> ln_ys;
     ln_ys.reserve(ys.size());
 
     /* data linearization */
@@ -202,10 +222,10 @@ std::pair<float, float> approx_exponential(std::vector<float> &xs, std::vector<f
         ln_ys.push_back(std::log(y));
     }
 
-    double sum_xs = 0.0;
-    double sum_ln_ys = 0.0;
-    double sum_xs_ln_ys = 0.0;
-    double sum_xs_squared = 0.0;
+    float sum_xs = 0.0;
+    float sum_ln_ys = 0.0;
+    float sum_xs_ln_ys = 0.0;
+    float sum_xs_squared = 0.0;
 
     for (size_t i = 0; i < xs.size(); i++) {
         sum_xs += xs[i];
@@ -214,10 +234,41 @@ std::pair<float, float> approx_exponential(std::vector<float> &xs, std::vector<f
         sum_xs_squared += xs[i] * xs[i];
     }
 
-    double n = xs.size();
+    float n = xs.size();
 
-    double B = (n * sum_xs_ln_ys - sum_xs * sum_ln_ys) / (n * sum_xs_squared - sum_xs * sum_xs);
-    double A = std::exp((sum_ln_ys - B * sum_xs) / n);
+    float B = (n * sum_xs_ln_ys - sum_xs * sum_ln_ys) / (n * sum_xs_squared - sum_xs * sum_xs);
+    float A = std::exp((sum_ln_ys - B * sum_xs) / n);
+
+    return {A, B};
+}
+
+std::pair<float, float> approx_power(std::vector<float> &xs, std::vector<float> &ys) {
+    std::vector<float> ln_ys;
+    ln_ys.reserve(ys.size());
+
+    std::vector<float> ln_xs;
+    ln_xs.reserve(xs.size());
+
+    size_t n = xs.size();
+    for (size_t i = 0; i < n; i++) {
+        ln_ys.push_back(std::log(ys[i]));
+        ln_xs.push_back(std::log(xs[i]));
+    }
+
+    float sum_xs = 0.0;
+    float sum_ln_ys = 0.0;
+    float sum_xs_ln_ys = 0.0;
+    float sum_xs_squared = 0.0;
+
+    for (size_t i = 0; i < n; i++) {
+        sum_xs += ln_xs[i];
+        sum_ln_ys += ln_ys[i];
+        sum_xs_ln_ys += ln_xs[i] * ln_ys[i];
+        sum_xs_squared += ln_xs[i] * ln_xs[i];
+    }
+
+    float B = (n * sum_xs_ln_ys - sum_xs * sum_ln_ys) / (n * sum_xs_squared - sum_xs * sum_xs);
+    float A = std::exp((sum_ln_ys - B * sum_xs) / n);
 
     return {A, B};
 }

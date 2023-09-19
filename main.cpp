@@ -53,6 +53,8 @@ int main() {
         throw std::runtime_error("The number of points x and y don't match!");
     }
 
+    std::cout << "LINEAR APPROXIMATION" << std::endl;
+
     std::pair<float, float> ab = approx_lineal(points.first, points.second);
     float a = ab.first;
     float b = ab.second;
@@ -71,6 +73,8 @@ int main() {
 
     std::cout << "======================================================================================" << std::endl;
 
+    std::cout << "EXPONENTIAL APPROXIMATION" << std::endl;
+
     std::pair<float, float> e_ab = approx_exponential(points.first, points.second);
     float e_a = e_ab.first;
     float e_b = e_ab.second;
@@ -86,6 +90,20 @@ int main() {
 
     std::cout << "======================================================================================" << std::endl;
 
+    std::cout << "POWER APPROXIMATION" << std::endl;
+
+    std::pair<float, float> p_ab = approx_power(points.first, points.second);
+    float p_a = p_ab.first;
+    float p_b = p_ab.second;
+
+    std::cout << "We got a = " << p_a << " and b = " << p_b << std::endl;
+
+    float powerDeviation = deviation_power(p_a, p_b, points.first, points.second);
+    std::cout << "Deviation measure for power approximation = " << powerDeviation << std::endl;
+
+    size_t p_n = points.first.size();
+    float powerExponentialDeviation = standard_deviation(powerDeviation, p_n);
+    std::cout << "Standard deviation for power approximation (δ)= " << powerExponentialDeviation << std::endl;
 
     return 0;
 }
