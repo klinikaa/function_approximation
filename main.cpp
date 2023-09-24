@@ -9,6 +9,8 @@
 #include "util.h"
 #include "graph.h"
 
+typedef std::pair<std::vector<float>, std::vector<float>> Points;
+
 void labInfo() {
     std::cout << "==============================" << std::endl;
     std::cout << "CHESNOKOV ARKADY" << std::endl;
@@ -17,7 +19,7 @@ void labInfo() {
     std::cout << "==============================" << std::endl;
 }
 
-std::pair<std::vector<float>, std::vector<float>> readFunctionPointsFromFile(std::string &fileName) {
+Points readFunctionPointsFromFile(std::string &fileName) {
     std::ifstream file(fileName);
     if (!file.is_open()) {
         throw std::runtime_error("Cannot open the file!");
@@ -50,11 +52,13 @@ int main() {
     labInfo();
 
     std::string fileName = "test.txt";
+
     std::pair<std::vector<float>, std::vector<float>> points = readFunctionPointsFromFile(fileName);
 
     if (points.first.size() != points.second.size()) {
         throw std::runtime_error("The number of points x and y don't match!");
     }
+
 
     std::vector<float> xs = points.first;
     std::vector<float> ys = points.second;

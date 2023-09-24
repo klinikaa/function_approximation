@@ -16,3 +16,4 @@ add_executable(function_approximation main.cpp
         process.h
         graph.cpp
         graph.h)
+
